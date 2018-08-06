@@ -21,12 +21,17 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // connect to mongoose
-mongoose.connect(dbConfig.url, { useNewUrlParser: true })
+const options = {
+  authSource: "admin",
+  useNewUrlParser: true
+};
+mongoose.connect(dbConfig.url, options)
   .then(() => {
     console.log('Successfully connected to mongodb.');
   })
-  .catch(() => {
+  .catch(err => {
     console.log('Could not connect to mongodb. Exiting now...');
+    console.log(err);
     process.exit();
   });
 
